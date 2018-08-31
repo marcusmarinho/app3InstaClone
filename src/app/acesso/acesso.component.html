@@ -1,12 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 d-flex justify-content-end">
+
+    <div class="col-sm-6 d-flex justify-content-end" [@animacao-banner] ="estadoBanner">
       <p><app-banner></app-banner></p>
     </div>
 
-    <div class="col-sm-6 d-flex justify-content-start">
-    <!--<p><app-login></app-login></p>-->
-    <app-cadastro></app-cadastro>
+    <div class="col-sm-6 d-flex justify-content-start" [@animacao-painel] ="estadoPainel">
+  <!-- <app-login></app-login>-->
+     <app-cadastro></app-cadastro>
     </div>  
   </div>
 </div>
