@@ -1,2 +1,6 @@
 <!--<button (click)="toogleEstadoAnimacao()">Teste</button>-->
-<div class="banner-background"></div>
+
+<div class="banner-background">
+    <img *ngFor="let imagem of imagens" [src] ="imagem.url" 
+      [@banner]="imagem.estado"/>
+</div>
