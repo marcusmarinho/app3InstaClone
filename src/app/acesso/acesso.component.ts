@@ -41,14 +41,12 @@ export class AcessoComponent implements OnInit {
 
   public cadastro: boolean = false
 
-
-
   constructor() { }
 
   ngOnInit() {
   }
 
-  public exibirPainel( event: string): void {
+  public exibirPainel( event: string ): void {
     this.cadastro = event === 'cadastro' ? true: false
   }
 
