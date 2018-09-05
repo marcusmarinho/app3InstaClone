@@ -11,7 +11,7 @@ import * as firebase from 'firebase'
 export class AppComponent implements OnInit {
   title = 'app3';
 
-  //config firebase
+  //config conexao firebase
   ngOnInit(): void{
     var config = {
       apiKey: "AIzaSyB1wGiV3I7975HTbUISmCH5vABdStxEtEw",
