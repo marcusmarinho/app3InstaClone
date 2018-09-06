@@ -1,7 +1,5 @@
 import { Component, OnInit, EventEmitter,Output  } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { fromEventPattern } from 'rxjs';
-
 import { Usuario } from '../usuario.model'
 import { Autenticacao } from '../../autenticacao.service';
 
@@ -10,8 +8,8 @@ import { Autenticacao } from '../../autenticacao.service';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
-export class CadastroComponent implements OnInit {
 
+export class CadastroComponent implements OnInit {
 
 @Output() public exibirPainel: EventEmitter<string> = new EventEmitter<string>()
 
@@ -42,6 +40,7 @@ public formulario: FormGroup = new FormGroup({
     )
     
     this.autenticacao.cadastroUsuario(usuario)
+      .then(() => this.exibirPainelLogin())
 
   }
 
