@@ -33,14 +33,14 @@ export class Autenticacao {
             })
 
     }
+    //Quando logado ao atualizar a pagina o usuario permanece logado
     public autenticar(email: string, senha: string): void {
 
         firebase.auth().signInWithEmailAndPassword(email, senha)
             .then((resposta: any) => {
                 firebase.auth().currentUser.getIdToken()
                     .then(( idToken: string) =>{
-                        this.token_id = idToken
-                        //ao carregar a pagina o token id se perde para corrigir isso utilizamos localStorage
+                        this.token_id = idToken                
                         localStorage.setItem('idToken', idToken)
                         this.router.navigate(['/home'])
                     })

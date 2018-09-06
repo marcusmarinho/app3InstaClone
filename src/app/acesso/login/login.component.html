@@ -10,6 +10,8 @@
           placeholder="E-mail"
           formControlName="email"
         >
+        <small *ngIf="formulario.get('email').valid && formulario.get('email').touched" class="form-text text-success">Done</small>
+        <small *ngIf="formulario.get('email').invalid && formulario.get('email').touched" class="form-text text-danger">Email Invalido</small>
       </div>
       <div class="form-group">
         <input 
@@ -18,6 +20,8 @@
           placeholder="Senha"
           formControlName="senha"
         >
+        <small *ngIf="formulario.get('senha').valid && formulario.get('senha').touched" class="form-text text-success">Done</small>
+        <small *ngIf="formulario.get('senha').invalid && formulario.get('senha').touched" class="form-text text-danger">Senha Invalido</small>
       </div>
       <button type="submit" class="btn btn-primary btn-sm btn-block">Entrar</button>
     </form>
