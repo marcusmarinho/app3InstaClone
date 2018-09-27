@@ -25,6 +25,7 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  
   }
 
   public exibirPainelLogin(): void {
@@ -32,24 +33,23 @@ export class CadastroComponent implements OnInit {
   }
 
   public cadastrarUsuario(): void {
-    if (this.formulario.status === 'INVALID') {
-      this.formulario.get('email').markAsTouched(),
-        this.formulario.get('nome_completo').markAsTouched(),
-        this.formulario.get('nome_usuario').markAsTouched(),
-        this.formulario.get('senha').markAsTouched
-    }
-    else {
-      let usuario: Usuario = new Usuario(
-        this.formulario.value.email,
-        this.formulario.value.nome_completo,
-        this.formulario.value.nome_usuario,
-        this.formulario.value.senha
-      )
-
-      this.autenticacao.cadastroUsuario(usuario)
+    if (this.formulario.status === 'INVALID')
+        {
+            this.formulario.get('email').markAsTouched(),
+            this.formulario.get('nome_completo').markAsTouched(),
+            this.formulario.get('nome_usuario').markAsTouched(),
+            this.formulario.get('senha').markAsTouched()
+        }
+    else 
+        {
+          let usuario: Usuario = new Usuario(
+            this.formulario.value.email,
+            this.formulario.value.nome_completo,
+            this.formulario.value.nome_usuario,
+            this.formulario.value.senha
+          )
+         this.autenticacao.cadastroUsuario(usuario)
         .then(() => this.exibirPainelLogin())
     }
-
   }
-
 }

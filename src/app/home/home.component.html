@@ -3,7 +3,7 @@
     <div class="logo"></div>
 
     <div>
-        <div class="add-post"></div>
+        <div class="add-post" data-toggle="modal" data-target="#exampleModal"></div>
         <a href="#" (click)="sair()" style="margin-left: 25px">Saida </a>
     </div>
 
@@ -12,5 +12,9 @@
 
 <br /><br /><br />
 <div class="container">
-  <app-publicacoes></app-publicacoes>   
+  <!--Do component pai para o component filho-->
+  <app-publicacoes #publicacoes></app-publicacoes>   
+  <!--quando o component filho incluirpublicacao disparar o evento atualizarTimeLine vamos
+  adicionar um event binding para um outro evento(ou metodo)-->
+  <app-incluir-publicacao (atualizarTimeLine)="atualizarTimeLine()"></app-incluir-publicacao>
 </div>

@@ -5,7 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms'
 
 import { ROUTES } from './app.routes'
 
+//services
 import { Autenticacao} from './autenticacao.service'
+import { AutenticacaoGuard } from './autenticacao-guard.service';
+import { Bd } from './bd.service'
+import { Progresso } from './progresso.service'
 
 import { AppComponent } from './app.component';
 import { AcessoComponent } from './acesso/acesso.component';
@@ -16,7 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
 import { RouterModule } from '@angular/router';
 
-import { AutenticacaoGuard } from './autenticacao-guard.service'
+import { IncluirPublicacaoComponent } from './home/incluir-publicacao/incluir-publicacao.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import { AutenticacaoGuard } from './autenticacao-guard.service'
     CadastroComponent,
     HomeComponent,
     PublicacoesComponent,
+    IncluirPublicacaoComponent,
 
   ],
   imports: [
@@ -35,7 +40,7 @@ import { AutenticacaoGuard } from './autenticacao-guard.service'
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [Autenticacao, AutenticacaoGuard],
+  providers: [Autenticacao, AutenticacaoGuard, Bd, Progresso],
   bootstrap: [AppComponent]
 
 })

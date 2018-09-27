@@ -26,7 +26,7 @@ export class BannerComponent implements OnInit {
   public estado: string = 'escondido'
 
   public imagens: Imagem[] = [
-    { estado: 'visivel', url: '/assets/banner-acesso/img_1.png' },
+    { estado: 'visivel',   url: '/assets/banner-acesso/img_1.png' },
     { estado: 'escondido', url: '/assets/banner-acesso/img_2.png' },
     { estado: 'escondido', url: '/assets/banner-acesso/img_3.png' },
     { estado: 'escondido', url: '/assets/banner-acesso/img_4.png' },

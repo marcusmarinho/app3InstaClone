@@ -5,17 +5,17 @@ import * as  firebase from 'firebase'
 import { Router } from '@angular/router'
 import { Injectable } from '@angular/core'
 
+
 @Injectable()
 
 export class Autenticacao {
 
-    constructor ( private router: Router) { }
+    constructor(private router: Router) { }
 
     public token_id: string
 
     public cadastroUsuario(usuario: Usuario): Promise<any> {
-        console.log('chegamos até o serviço', usuario)
-
+    
         //auth seleciona a dimensao de autenticacao do servico do firebase
         //.database dimensao banco de dados
 
@@ -29,25 +29,26 @@ export class Autenticacao {
                     .set(usuario)
             })
             .catch((error: Error) => {
-                console.log(error)
+                console.log('Esse aqui é o log de erro', error.message)
             })
-
     }
+    
     //Quando logado ao atualizar a pagina o usuario permanece logado
     public autenticar(email: string, senha: string): void {
 
         firebase.auth().signInWithEmailAndPassword(email, senha)
             .then((resposta: any) => {
                 firebase.auth().currentUser.getIdToken()
-                    .then(( idToken: string) =>{
-                        this.token_id = idToken                
+                    .then((idToken: string) => {
+                        this.token_id = idToken
                         localStorage.setItem('idToken', idToken)
                         this.router.navigate(['/home'])
                     })
             })
-            .catch((erro: Error) => {
-                console.log(erro)
+            .catch((erro: Error) => {       
+                console.log(erro.message)          
             })
+
     }
 
     public autenticado(): boolean {
@@ -58,11 +59,11 @@ export class Autenticacao {
 
         if (this.token_id === undefined) {
             this.router.navigate(['/'])
-        } 
-       
-        return this.token_id !== undefined 
-    }
+        }
 
+        return this.token_id !== undefined
+    }
+    
     public sair(): void {
 
         firebase.auth().signOut()
