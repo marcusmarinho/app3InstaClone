@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Progresso } from '../../progresso.service'
 import { Bd } from '../../bd.service'
 import { Observable, Subject } from 'rxjs-compat'
@@ -21,15 +21,17 @@ export class IncluirPublicacaoComponent implements OnInit {
 
   public progressoPublicacao: string = 'pendente'
   public porcentagemUpload: number
+  public eventoUploadRecebido: boolean
 
   public formulario: FormGroup = new FormGroup({
-    'titulo': new FormControl(null)
+    'titulo': new FormControl(null,[Validators.required, Validators.maxLength(30)])
   })
 
   constructor(private bd: Bd,
               private progresso: Progresso) { }
 
   ngOnInit() {
+    console.log(this.formulario)
     /*
     Metodo que se inscreve no observable do firebase que dispara eventos quando existem modificações
     no estado do usuario autenticado.
@@ -40,6 +42,7 @@ export class IncluirPublicacaoComponent implements OnInit {
     })
   }
 
+  
   public publicar(): void {
     this.bd.publicar({
       email:  this.email,
@@ -47,6 +50,12 @@ export class IncluirPublicacaoComponent implements OnInit {
       titulo: this.formulario.value.titulo
     })
 
+
+    
+    if(this.formulario.status ==='INVALID'){
+      this.formulario.get('titulo').markAsTouched()
+    }
+    
     //dispara um evento a cada 1,5s
     let acompanhamentoUpload = Observable.interval(1500)
     //assinar observable
@@ -77,7 +86,9 @@ export class IncluirPublicacaoComponent implements OnInit {
   }
 
   public preparaImagemUpload(event: Event): void {
-    this.imagem = (<HTMLInputElement>event.target).files
+    this.eventoUploadRecebido = event.returnValue
+    if (this.eventoUploadRecebido = true){
+      this.imagem = (<HTMLInputElement>event.target).files
+    }
   }
-
 }

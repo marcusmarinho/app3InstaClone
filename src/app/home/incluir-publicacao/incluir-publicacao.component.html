@@ -12,10 +12,26 @@
         <div class="modal-body">
           <input type="file" class="form-control" accept="image/*" (change)="preparaImagemUpload($event)">
           <input type="text" placeholder="Título da Publicação" class="form-control" formControlName="titulo">
+          <small *ngIf="formulario.get('titulo').valid && formulario.get('titulo').touched" class="form-text text-success">Done
+          </small>
+          <small *ngIf="formulario.get('titulo').invalid && formulario.get('titulo').touched" class="form-text text-danger">Digite
+            o Titulo da Publicação
+          </small>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="submit" class="btn btn-primary">Publicar</button>
+
+          <ng-template [ngIf]="formulario.get('titulo').valid && eventoUploadRecebido" [ngIfElse]="btnFalse">
+            <div>
+              <button type="submit" class="btn btn-primary">Publicar</button>
+            </div>
+          </ng-template>
+
+          <ng-template #btnFalse>
+            <div>
+              <button type="submit" disabled="disabled" class="btn btn-primary">Publicar</button>
+            </div>
+          </ng-template>
         </div>
       </form>
     </div>
