@@ -12,9 +12,9 @@ export class Bd {
         console.log(publicacao)
 
         firebase.database().ref(`publicacoes/${btoa(publicacao.email)}`)
-            .push({ titulo: publicacao.titulo })
+            .push( { titulo: publicacao.titulo } )
             .then((resposta: any) => {
-
+                
                 let nomeImagem = resposta.key
 
                 firebase.storage().ref()
@@ -46,37 +46,52 @@ export class Bd {
 
             //consultar as publicações (database)
             firebase.database().ref(`publicacoes/${btoa(emailUsuario)}`)
-                .once('value')
-                .then((snapshot: any) => {
-                    //console.log(snapshot.val())
+            .orderByKey()
+            .once('value')
+            .then((snapshot: any) => {
+                //console.log(snapshot.val())
 
-                    let publicacoes: Array<any> = [];
+                let publicacoes: Array<any> = [];
 
-                    snapshot.forEach((childSnapshot: any) => {
+                snapshot.forEach((childSnapshot: any) => {
 
-                        let publicacao = childSnapshot.val()
+                    let publicacao = childSnapshot.val()
+                    publicacao.key = childSnapshot.key
 
-                        //consultar a url da imagem (storage)
-                        firebase.storage().ref()
-                            .child(`imagens/${childSnapshot.key}`)
-                            .getDownloadURL()
-                            .then((url: string) => {
-
-                                publicacao.url_imagem = url
-
-                                //consultar o nome do usuário
-                                firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
-                                    .once('value')
-                                    .then((snapshot: any) => {
-
-                                        publicacao.nick_usuario = snapshot.val().nick_usuario
-
-                                        publicacoes.push(publicacao)
-                                    })
-                            })
-                    })
-                    resolve(publicacoes)
+                    
+                    publicacoes.push(publicacao)                   
                 })
+
+                //console.log(publicacoes)
+                //resolve(publicacoes)
+
+                return publicacoes.reverse()
+            })
+            .then((publicacoes: any) => {
+                
+                publicacoes.forEach((publicacao) => {
+
+                    //consultar a url da imagem (storage)
+                    firebase.storage().ref()
+                        .child(`imagens/${publicacao.key}`)
+                        .getDownloadURL()
+                        .then((url: string) => {
+                            
+                            publicacao.url_imagem = url
+
+                            //consultar o nome do usuário
+                            firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
+                                .once('value')
+                                .then((snapshot: any) => {
+                                    
+                                    publicacao.nome_usuario = snapshot.val().nome_usuario
+                                })
+                        })
+                })
+
+                resolve(publicacoes)
+
+            })
 
         })
 

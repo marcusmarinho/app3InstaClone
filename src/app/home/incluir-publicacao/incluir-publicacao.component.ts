@@ -81,7 +81,9 @@ export class IncluirPublicacaoComponent implements OnInit {
           //atualizar publicacoes a cada nova publicacao
           this.atualizarTimeLine.emit()
           continua.next(false)
+          
         }
+       
     })
   }
 
@@ -91,4 +93,5 @@ export class IncluirPublicacaoComponent implements OnInit {
       this.imagem = (<HTMLInputElement>event.target).files
     }
   }
+
 }
