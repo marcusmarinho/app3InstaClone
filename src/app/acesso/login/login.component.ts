@@ -38,8 +38,7 @@ export class LoginComponent implements OnInit {
       this.autenticacao.autenticar(
         this.formulario.value.email,
         this.formulario.value.senha
-      )
-    
+      )  
     }
   }
 }

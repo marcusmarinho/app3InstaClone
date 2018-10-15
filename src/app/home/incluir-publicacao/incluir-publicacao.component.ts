@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Progresso } from '../../progresso.service'
 import { Bd } from '../../bd.service'
@@ -11,6 +11,7 @@ import * as firebase from 'firebase'
   templateUrl: './incluir-publicacao.component.html',
   styleUrls: ['./incluir-publicacao.component.css']
 })
+
 export class IncluirPublicacaoComponent implements OnInit {
 
   //Variavel para atualizar Time Line
@@ -20,8 +21,9 @@ export class IncluirPublicacaoComponent implements OnInit {
   private imagem: any
 
   public progressoPublicacao: string = 'pendente'
+
   public porcentagemUpload: number
-  public eventoUploadRecebido: boolean
+  public eventoUploadRecebido: number
 
   public formulario: FormGroup = new FormGroup({
     'titulo': new FormControl(null,[Validators.required, Validators.maxLength(30)])
@@ -31,27 +33,24 @@ export class IncluirPublicacaoComponent implements OnInit {
               private progresso: Progresso) { }
 
   ngOnInit() {
-    console.log(this.formulario)
     /*
     Metodo que se inscreve no observable do firebase que dispara eventos quando existem modificações
     no estado do usuario autenticado.
     Dessa forma pode recuperar o e-mail para que possamos implementar o metodo publicar
     */
-    firebase.auth().onAuthStateChanged((user)=> {
+    firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email
     })
   }
 
-  
   public publicar(): void {
+
     this.bd.publicar({
       email:  this.email,
       imagem: this.imagem[0],
       titulo: this.formulario.value.titulo
     })
 
-
-    
     if(this.formulario.status ==='INVALID'){
       this.formulario.get('titulo').markAsTouched()
     }
@@ -62,8 +61,9 @@ export class IncluirPublicacaoComponent implements OnInit {
     let continua = new Subject()
 
     continua.next(true)
-
+    this.progressoPublicacao ='pendente'
     acompanhamentoUpload
+      
       .takeUntil(continua)
       .subscribe(() => {      
         console.log(this.progresso.status)
@@ -79,19 +79,17 @@ export class IncluirPublicacaoComponent implements OnInit {
 
           //emitir evento de component parent(HOME neste caso)
           //atualizar publicacoes a cada nova publicacao
-          this.atualizarTimeLine.emit()
-          continua.next(false)
-          
+          this.atualizarTimeLine.emit() 
+          continua.next(false) 
         }
-       
-    })
+            
+    }) 
   }
 
-  public preparaImagemUpload(event: Event): void {
-    this.eventoUploadRecebido = event.returnValue
-    if (this.eventoUploadRecebido = true){
+  public preparaImagemUpload(event): void {
+    this.eventoUploadRecebido = event.target.files.length
+    if (this.eventoUploadRecebido != 0){
       this.imagem = (<HTMLInputElement>event.target).files
     }
   }
-
 }
