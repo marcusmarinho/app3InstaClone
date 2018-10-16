@@ -22,8 +22,8 @@ export class HomeComponent implements OnInit {
   }
   
   public modalManip(): void{
-    //console.log('passou por aqui')
     this.incluirPublicacoes.progressoPublicacao = 'pendente'
+    this.incluirPublicacoes.formulario.reset()
   }
 
   public atualizarTimeLine(): void{

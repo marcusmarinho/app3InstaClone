@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //Firebase Import
 import * as firebase from 'firebase'
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

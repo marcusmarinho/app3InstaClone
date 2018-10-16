@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs-compat'
 import 'rxjs/Rx'
 import * as firebase from 'firebase'
 
+
 @Component({
   selector: 'app-incluir-publicacao',
   templateUrl: './incluir-publicacao.component.html',
@@ -50,7 +51,7 @@ export class IncluirPublicacaoComponent implements OnInit {
       imagem: this.imagem[0],
       titulo: this.formulario.value.titulo
     })
-
+      
     if(this.formulario.status ==='INVALID'){
       this.formulario.get('titulo').markAsTouched()
     }
